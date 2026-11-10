@@ -48,6 +48,10 @@
     <!-- HERO -->
     <section class="hero">
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="blackhole">
+        <canvas class="bh-glow" aria-hidden="true"></canvas>
+        <canvas class="bh-art" role="img" aria-label="Animated ASCII art of a black hole with a glowing accretion disk"></canvas>
+      </div>
       <div class="hero-inner">
         <p class="hero-kicker mono" data-hero-fade>Embedded &amp; Software Engineer — Portfolio 2026</p>
         <h1 class="hero-name">
@@ -58,8 +62,7 @@
           <p class="hero-sub" data-hero-fade>Computer engineering student specialising in embedded systems. I build hardware-near software, IoT devices, and the apps and cloud services that connect them.</p>
           <dl class="hero-meta mono" data-hero-fade>
             <div><dt>Based in</dt><dd>Jönköping, SE · <time class="clock">--:--</time></dd></div>
-            <div><dt>Studying</dt><dd>Jönköping University · ’27</dd></div>
-          </dl>
+            <div><dt>Studying</dt><dd>Jönköping University · ’27</dd></div>          </dl>
         </div>
       </div>
       <div class="hero-scroll mono" data-hero-fade aria-hidden="true"><span>Scroll</span><i></i></div>
@@ -97,8 +100,8 @@
         <div class="project-body">
           <div class="project-text" data-reveal>
             <p>A robot that maps rooms, avoids obstacles and drives to any point you tap in a phone app. Built on a Husqvarna Aspire base and a Raspberry Pi 5 over three Scrum sprints, with a phone app and a cloud backend on Azure.</p>
-            <p class="project-role"><span class="mono">My part</span>I built the lidar's ROS 2 package, deployed the robot software to the Raspberry Pi, and got the Nav2 and RTAB-Map navigation stack building on the Pi. I also set up the team's shared dev container and kept the Scrum records.</p>
-            <ul class="tags mono"><li>ROS 2</li><li>Python</li><li>Raspberry Pi 5</li><li>Nav2</li><li>RTAB-Map</li><li>Docker</li></ul>
+            <p class="project-role"><span class="mono">My part</span>The 3D lidar was a big part of my work. The robot only came with a flat 2D scan, so we added a third dimension, and in the end it could map a whole room in 3D. I built the lidar's ROS 2 package, deployed the robot software to the Raspberry Pi, got the Nav2 and RTAB-Map navigation stack building on the Pi, and helped set up Foxglove on the Pi so we could watch maps and sensor data live. I also set up the team's shared dev container and kept the Scrum records.</p>
+            <ul class="tags mono"><li>3D lidar</li><li>ROS 2</li><li>Python</li><li>Raspberry Pi 5</li><li>Nav2</li><li>RTAB-Map</li><li>Foxglove</li><li>Docker</li></ul>
             <div class="project-links">
               <a class="btn" href="https://www.youtube.com/watch?v=S5txy-t1J3o" target="_blank" rel="noopener" data-magnetic>Watch the demo <span aria-hidden="true">↗</span></a>
               <span class="badge mono">Private repository</span>
@@ -128,7 +131,7 @@
             <div class="project-links"><span class="badge mono">Private repository</span></div>
           </div>
           <div class="media media--single">
-            <figure class="shot shot--main" data-speed="-4"><img src="assets/img/baronsedge-draft.webp" alt="Baron's Edge draft board with your team, enemy team, bans and suggested picks" loading="lazy"></figure>
+            <figure class="shot shot--main shot--window" data-speed="-4"><img src="assets/img/baronsedge-draft.jpg" alt="Baron's Edge draft board with your team, enemy team, bans and suggested picks" loading="lazy"></figure>
           </div>
         </div>
       </article>
@@ -151,7 +154,7 @@
           <div class="media media--phones">
             <figure class="shot shot--phone" data-speed="8"><img src="assets/img/beanolift-home.jpg" alt="BeanoLift home screen with weekly workout chart and streak" loading="lazy"></figure>
             <figure class="shot shot--phone" data-speed="-6"><img src="assets/img/beanolift-active.jpg" alt="Active workout screen logging bench press sets" loading="lazy"></figure>
-            <figure class="shot shot--phone" data-speed="12"><img src="assets/img/beanolift-workouts.jpg" alt="Workout library with push, pull and leg days" loading="lazy"></figure>
+            <figure class="shot shot--phone" data-speed="12"><img src="assets/img/beanolift-friends.jpg" alt="Friends tab with a feed of friends' finished workouts, PRs and reactions" loading="lazy"></figure>
           </div>
         </div>
       </article>
@@ -172,7 +175,7 @@
             <div class="project-links"><span class="badge mono">Private repository</span></div>
           </div>
           <div class="media media--phones">
-            <figure class="shot shot--phone" data-speed="8"><img src="assets/img/lolguessr-menu.jpg" alt="LoL Guessr main menu" loading="lazy"></figure>
+            <figure class="shot shot--phone" data-speed="8"><img src="assets/img/lolguessr-leaderboard.jpg" alt="Leaderboard ranking players by their average number of guesses" loading="lazy"></figure>
             <figure class="shot shot--phone" data-speed="-6"><img src="assets/img/lolguessr-game.jpg" alt="Game screen with colour-coded feedback on each champion guess" loading="lazy"></figure>
             <figure class="shot shot--phone" data-speed="12"><img src="assets/img/lolguessr-win.jpg" alt="Win screen with a play again button" loading="lazy"></figure>
           </div>
@@ -271,12 +274,13 @@
 
   <footer class="footer mono">
     <p>© 2026 Benjamin Bladelius</p>
-    <p class="footer-legal">Baron's Edge and LoL Guessr are not endorsed by Riot Games. League of Legends is a trademark of Riot Games, Inc.</p>
+    <p class="footer-legal">Hero art: "Black Hole" ASCII code art © 2026 JIN2 (<a href="https://instagram.com/jin_22ee" target="_blank" rel="noopener">@jin_22ee</a>), used for personal, non-commercial use. Baron's Edge and LoL Guessr are not endorsed by Riot Games. League of Legends is a trademark of Riot Games, Inc.</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
   <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/black-hole.js" defer></script>
 </body>
 </html>

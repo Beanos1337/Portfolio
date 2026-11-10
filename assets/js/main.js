@@ -1,6 +1,7 @@
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+let lenis = null; // smooth scroll, set in run(); the image viewer pauses it
 
 // ---------- always on (no animation library needed) ----------
 const clock = document.querySelector('.clock');
@@ -17,6 +18,7 @@ document.querySelectorAll('[data-copy]').forEach((btn) => {
 });
 
 dotField(document.querySelector('.hero-canvas'));
+imageViewer();
 
 const motion = !reduce && window.gsap && window.ScrollTrigger && !root.classList.contains('no-motion');
 if (!motion) {
@@ -32,7 +34,6 @@ function run() {
   gsap.registerPlugin(ScrollTrigger);
 
   // Smooth scroll (skipped if Lenis failed to load: native scroll still works).
-  let lenis = null;
   if (window.Lenis) {
     lenis = new window.Lenis({ lerp: 0.09 });
     lenis.on('scroll', ScrollTrigger.update);
@@ -137,12 +138,86 @@ function run() {
     const rx = gsap.quickTo(ring, 'x', { duration: 0.5, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: 0.5, ease: 'power3' });
     gsap.set([dot, ring], { x: -100, y: -100 });
     addEventListener('pointermove', (e) => { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
-    document.addEventListener('pointerover', (e) => cursor.classList.toggle('is-hover', !!e.target.closest('a, button')));
+    document.addEventListener('pointerover', (e) => cursor.classList.toggle('is-hover', !!e.target.closest('a, button, .shot, .viewer-img')));
     document.addEventListener('pointerleave', () => gsap.set([dot, ring], { x: -100, y: -100 }));
   }
 
   // Images change layout height as they load; keep trigger positions right.
   addEventListener('load', () => ScrollTrigger.refresh());
+}
+
+/** Click a screenshot: it lifts out of its frame and glides to the centre, the page blurs and stops scrolling. */
+function imageViewer() {
+  const overlay = document.createElement('div');
+  overlay.className = 'viewer';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Enlarged image');
+  overlay.innerHTML = '<button class="viewer-close mono" type="button">Close <span aria-hidden="true">✕</span></button>';
+  document.body.append(overlay);
+  const closeBtn = overlay.querySelector('button');
+  let open = null;
+
+  const rectOf = (el) => { const r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height }; };
+  function target(img) { // as big as fits: 90% wide, 86% tall, natural aspect
+    const ratio = img.naturalWidth / img.naturalHeight || 1;
+    let width = Math.min(innerWidth * 0.9, 1400), height = width / ratio;
+    if (height > innerHeight * 0.86) { height = innerHeight * 0.86; width = height * ratio; }
+    return { left: (innerWidth - width) / 2, top: (innerHeight - height) / 2, width, height };
+  }
+  function animate(el, to, ease, done) {
+    if (window.gsap && !reduce) { window.gsap.to(el, { ...to, duration: 0.8, ease, overwrite: true, onComplete: done }); return; }
+    for (const k in to) el.style[k] = typeof to[k] === 'number' ? to[k] + 'px' : to[k];
+    done?.();
+  }
+
+  function show(fig) {
+    if (open) return;
+    const img = fig.querySelector('img');
+    const clone = img.cloneNode();
+    clone.className = 'viewer-img';
+    clone.removeAttribute('loading');
+    const from = rectOf(fig), radius = getComputedStyle(fig).borderRadius;
+    Object.assign(clone.style, { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px', borderRadius: radius });
+    document.body.append(clone);
+    clone.addEventListener('click', hide);
+    fig.style.visibility = 'hidden'; // the socket stays empty while the image is out
+    open = { fig, img, clone, radius, back: document.activeElement };
+    lenis?.stop();
+    root.classList.add('viewer-open');
+    overlay.classList.add('is-open');
+    closeBtn.focus({ preventScroll: true });
+    animate(clone, { ...target(img), borderRadius: '12px' }, 'expo.out');
+  }
+
+  function hide() {
+    if (!open) return;
+    const { fig, clone, radius, back } = open;
+    open = null;
+    overlay.classList.remove('is-open');
+    animate(clone, { ...rectOf(fig), borderRadius: radius }, 'expo.inOut', () => {
+      fig.style.visibility = '';
+      clone.remove();
+      root.classList.remove('viewer-open');
+      lenis?.start();
+      back?.focus?.({ preventScroll: true });
+    });
+  }
+
+  document.querySelectorAll('.shot').forEach((fig) => {
+    fig.tabIndex = 0;
+    fig.setAttribute('role', 'button');
+    fig.setAttribute('aria-label', 'Enlarge image: ' + fig.querySelector('img').alt);
+    fig.addEventListener('click', () => show(fig));
+    fig.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(fig); } });
+  });
+  overlay.addEventListener('click', hide);
+  document.addEventListener('keydown', (e) => {
+    if (!open) return;
+    if (e.key === 'Escape') hide();
+    if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); } // the close button is the only stop inside the dialog
+  });
+  addEventListener('resize', () => { if (open) Object.assign(open.clone.style, Object.fromEntries(Object.entries(target(open.img)).map(([k, v]) => [k, v + 'px']))); });
 }
 
 /** Wrap each char/word of `el` in a clipping mask. Returns the inner spans to animate. */

@@ -64,8 +64,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @keyframes grain { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-5%, 3%); } 40% { transform: translate(3%, -6%); } 60% { transform: translate(-7%, -2%); } 80% { transform: translate(6%, 5%); } }
 
 .cursor { display: none; }
-.has-cursor .cursor { display: block; position: fixed; inset: 0; z-index: 95; pointer-events: none; mix-blend-mode: difference; }
-.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+.has-cursor .cursor { display: block; position: fixed; inset: 0; z-index: 200; pointer-events: none; mix-blend-mode: difference; }
+.has-cursor, .has-cursor a, .has-cursor button, .has-cursor .shot, .has-cursor .viewer, .has-cursor .viewer-img { cursor: none; }
 .cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); }
 .cursor-dot { width: 6px; height: 6px; }
 .cursor-ring { width: 36px; height: 36px; background: transparent; border: 1px solid #fff; transition: width .4s var(--ease), height .4s var(--ease), background-color .4s var(--ease); }
@@ -93,6 +93,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 30%, transparent 85%);
 }
 .hero-inner { position: relative; width: 100%; }
+/* JIN2's black hole sits in the empty top-right of the hero; screen blend turns its black background see-through */
+.blackhole { position: absolute; top: -11vh; right: -6vh; height: 70vh; aspect-ratio: 4 / 3; mix-blend-mode: screen; pointer-events: none; } /* centre lands ~24vh from the top, above the name */
+.bh-art, .bh-glow { position: absolute; inset: 0; width: 100%; height: 100%;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); }
+.bh-glow { filter: blur(14px) brightness(1.6); opacity: .8; mix-blend-mode: screen; }
+.footer-legal a { border-bottom: 1px solid var(--line-2); }
+.footer-legal a:hover { color: var(--fg); }
+@media (max-width: 640px) { .blackhole { top: 16px; right: auto; left: -15vw; width: 130vw; height: auto; } }
 .hero-kicker { color: var(--soft); margin-bottom: clamp(16px, 3vw, 32px); }
 .hero-name { font-weight: 800; font-size: clamp(56px, 15.5vw, 260px); line-height: .86; letter-spacing: -.055em; margin-left: -.04em; }
 .hero-line { display: block; }
@@ -160,9 +169,24 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .media--phones .shot:nth-child(3) { margin-top: 40px; }
 .shot { position: relative; overflow: hidden; border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); }
 .shot img { width: 100%; height: 100%; object-fit: cover; }
+.shot--window { border: 0; border-radius: 0; } /* the app's own purple window outline is the frame */
 .shot--phone { border-radius: clamp(14px, 2.2vw, 28px); aspect-ratio: 9 / 19.5; }
 .media--wide .shot:not(.shot--main) { aspect-ratio: 4 / 3; }
 @media (max-width: 560px) { .media--phones { gap: 8px; } }
+
+/* ---------- image viewer ---------- */
+html { scrollbar-gutter: stable; } /* page doesn't jump sideways when scrolling is locked */
+.viewer-open, .viewer-open body { overflow: hidden; }
+.shot { cursor: zoom-in; }
+.viewer {
+  position: fixed; inset: 0; z-index: 150; background: rgba(10, 10, 10, .5);
+  -webkit-backdrop-filter: blur(14px) saturate(.8); backdrop-filter: blur(14px) saturate(.8);
+  opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s .5s;
+}
+.viewer.is-open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); cursor: zoom-out; }
+.viewer-close { position: absolute; top: 22px; right: var(--gutter); padding: 10px 0; color: var(--fg); }
+.viewer-img { position: fixed; z-index: 160; margin: 0; object-fit: cover; cursor: zoom-out; box-shadow: 0 40px 120px rgba(0, 0, 0, .7); }
+@media (prefers-reduced-motion: reduce) { .viewer, .viewer.is-open { transition: none; } }
 
 /* ---------- about ---------- */
 .about { padding-bottom: clamp(120px, 16vw, 220px); }
