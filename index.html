@@ -27,8 +27,11 @@
   <a class="skip" href="#work">Skip to projects</a>
 
   <div class="loader" aria-hidden="true">
+    <canvas class="tide-glow"></canvas>
+    <canvas class="tide-art"></canvas>
     <div class="loader-count"><span class="loader-num">0</span><span class="loader-pct">%</span></div>
     <div class="loader-label mono">Benjamin Bladelius · Portfolio</div>
+    <div class="loader-bar"><i></i></div>
   </div>
 
   <div class="cursor" aria-hidden="true"><div class="cursor-ring"></div><div class="cursor-dot"></div></div>
@@ -53,7 +56,7 @@
         <canvas class="bh-art" role="img" aria-label="Animated ASCII art of a black hole with a glowing accretion disk"></canvas>
       </div>
       <div class="hero-inner">
-        <p class="hero-kicker mono" data-hero-fade>Embedded &amp; Software Engineer — Portfolio 2026</p>
+        <p class="hero-kicker mono" data-hero-fade>Embedded &amp; Software Engineer - Portfolio 2026</p>
         <h1 class="hero-name">
           <span class="hero-line" data-split="chars">Benjamin</span>
           <span class="hero-line hero-line--serif" data-split="chars">Bladelius</span>
@@ -86,7 +89,7 @@
       <div class="section-head">
         <span class="section-num mono">01</span>
         <h2 class="section-title" data-split="words">Selected work</h2>
-        <p class="section-note mono" data-reveal>Four projects · 2025 — 2026</p>
+        <p class="section-note mono" data-reveal>Four projects · 2025 - 2026</p>
       </div>
 
       <article class="project">
@@ -225,7 +228,7 @@
       <ol class="timeline">
         <li class="timeline-line" aria-hidden="true"></li>
         <li class="job" data-reveal>
-          <p class="job-date mono">Mar — May 2026</p>
+          <p class="job-date mono">Mar - May 2026</p>
           <div>
             <h3>Sigma Technology Embedded Solutions</h3>
             <p class="job-role mono">Embedded systems consultant · Internship · Jönköping</p>
@@ -233,7 +236,7 @@
           </div>
         </li>
         <li class="job" data-reveal>
-          <p class="job-date mono">Jun — Aug 2025</p>
+          <p class="job-date mono">Jun - Aug 2025</p>
           <div>
             <h3>Bosch</h3>
             <p class="job-role mono">Systems engineer · Summer · Tranås</p>
@@ -241,14 +244,14 @@
           </div>
         </li>
         <li class="job" data-reveal>
-          <p class="job-date mono">2024 — 2027</p>
+          <p class="job-date mono">2024 - 2027</p>
           <div>
             <h3>Jönköping University</h3>
             <p class="job-role mono">BSc Computer Engineering · Embedded systems</p>
           </div>
         </li>
         <li class="job" data-reveal>
-          <p class="job-date mono">2022 — 2023</p>
+          <p class="job-date mono">2022 - 2023</p>
           <div>
             <h3>TUC Yrkeshögskola</h3>
             <p class="job-role mono">Web development · HTML, CSS and agile methods</p>
@@ -259,7 +262,7 @@
 
     <!-- CONTACT -->
     <section class="contact" id="contact">
-      <p class="mono contact-kicker" data-reveal>04 — Contact</p>
+      <p class="mono contact-kicker" data-reveal>04 - Contact</p>
       <h2 class="contact-title"><span data-split="words">Let's build</span> <em data-split="words">something.</em></h2>
       <div class="contact-row" data-reveal>
         <a class="contact-email" href="mailto:benjaminbladelius@gmail.com" data-magnetic>benjaminbladelius@gmail.com</a>
@@ -274,9 +277,10 @@
 
   <footer class="footer mono">
     <p>© 2026 Benjamin Bladelius</p>
-    <p class="footer-legal">Hero art: "Black Hole" ASCII code art © 2026 JIN2 (<a href="https://instagram.com/jin_22ee" target="_blank" rel="noopener">@jin_22ee</a>), used for personal, non-commercial use. Baron's Edge and LoL Guessr are not endorsed by Riot Games. League of Legends is a trademark of Riot Games, Inc.</p>
+    <p class="footer-legal">"Black Hole" (hero) and "Night Tide" (loading screen) ASCII code art © 2026 JIN2 (<a href="https://instagram.com/jin_22ee" target="_blank" rel="noopener">@jin_22ee</a>), used for personal, non-commercial use. Baron's Edge and LoL Guessr are not endorsed by Riot Games. League of Legends is a trademark of Riot Games, Inc.</p>
   </footer>
 
+  <script src="assets/js/night-tide.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>

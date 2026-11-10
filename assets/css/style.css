@@ -48,12 +48,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ---------- loader ---------- */
 .loader { display: none; }
 .js:not(.no-motion) .loader {
-  display: flex; position: fixed; inset: 0; z-index: 100; background: var(--fg); color: var(--bg);
-  flex-direction: column; justify-content: space-between; padding: var(--gutter);
+  display: flex; position: fixed; inset: 0; z-index: 100; background: #03050a; color: var(--fg);
+  flex-direction: column; justify-content: space-between; padding: var(--gutter) var(--gutter) calc(var(--gutter) + 12px); overflow: hidden;
 }
-.loader-count { font-size: clamp(80px, 22vw, 320px); font-weight: 800; letter-spacing: -.05em; line-height: .8; margin-top: auto; order: 2; }
+.loader-count { position: relative; font-size: clamp(80px, 22vw, 320px); font-weight: 800; letter-spacing: -.05em; line-height: .8; margin-top: auto; order: 2; text-shadow: 0 0 40px rgba(3, 5, 10, .8); }
 .loader-pct { font-size: .3em; vertical-align: top; margin-left: .1em; }
-.loader-label { order: 1; }
+.loader-label { position: relative; order: 1; color: var(--soft); }
+/* JIN2's Night Tide rolls in behind the counter */
+.tide-art, .tide-glow { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tide-glow { filter: blur(10px) brightness(1.5); opacity: .7; mix-blend-mode: screen; }
+/* full-width progress bar along the bottom edge, filled by the counter */
+.loader-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, .1); }
+.loader-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(90deg, rgba(146, 176, 210, .15), rgba(196, 214, 236, .8) 70%, #fff); box-shadow: 0 0 14px rgba(170, 195, 235, .55); }
+.loader-bar i::after { content: ''; position: absolute; right: -3px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px 3px rgba(200, 220, 255, .9), 0 0 30px 8px rgba(146, 176, 210, .5); }
 
 /* ---------- grain + cursor ---------- */
 .grain {

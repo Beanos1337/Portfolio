@@ -55,10 +55,10 @@ function run() {
   // Loader: count to 100, lift the curtain, then the name rises in.
   const heroChars = [...document.querySelectorAll('.hero-name [data-split]')].flatMap((el) => splits.get(el));
   gsap.set(heroChars, { yPercent: 110 });
-  const num = document.querySelector('.loader-num');
+  const num = document.querySelector('.loader-num'), bar = document.querySelector('.loader-bar i');
   const count = { v: 0 };
   gsap.timeline()
-    .to(count, { v: 100, duration: 1.1, ease: 'power2.inOut', onUpdate: () => { num.textContent = Math.round(count.v); } })
+    .to(count, { v: 100, duration: 1.6, ease: 'power2.inOut', onUpdate: () => { num.textContent = Math.round(count.v); bar.style.width = count.v + '%'; } })
     .to('.loader', { yPercent: -100, duration: 1, ease: 'expo.inOut' }, '+=.1')
     .call(() => { root.classList.add('ready'); lenis?.start(); }, null, '-=.5') // let people scroll as soon as the curtain lifts
     .to(heroChars, { yPercent: 0, duration: 1.3, ease: 'expo.out', stagger: 0.035 }, '-=.45')
