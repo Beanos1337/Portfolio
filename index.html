@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benjamin Bladelius · Embedded &amp; Software Engineer</title>
+  <meta name="description" content="Computer engineering student at Jönköping University specialising in embedded systems: ESP32, Raspberry Pi, ROS 2, MQTT, and the apps and cloud services around them.">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:title" content="Benjamin Bladelius · Embedded &amp; Software Engineer">
+  <meta property="og:description" content="Embedded systems, IoT and the software that connects them.">
+  <meta property="og:image" content="assets/img/robot-3d-mapping.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='%23f5f5f5' text-anchor='middle'%3EBB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    // Hide-before-animate only when motion is allowed; if the scripts never start, show everything after 4 s.
+    (function (h) {
+      h.classList.add('js');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('no-motion');
+      setTimeout(function () { if (!h.classList.contains('motion')) h.classList.add('no-motion'); }, 4000);
+    })(document.documentElement);
+  </script>
+</head>
+<body>
+  <a class="skip" href="#work">Skip to projects</a>
+
+  <div class="loader" aria-hidden="true">
+    <div class="loader-count"><span class="loader-num">0</span><span class="loader-pct">%</span></div>
+    <div class="loader-label mono">Benjamin Bladelius · Portfolio</div>
+  </div>
+
+  <div class="cursor" aria-hidden="true"><div class="cursor-ring"></div><div class="cursor-dot"></div></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="nav-logo" href="#top" data-magnetic aria-label="Back to top">BB<span>.</span></a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-inner">
+        <p class="hero-kicker mono" data-hero-fade>Embedded &amp; Software Engineer — Portfolio 2026</p>
+        <h1 class="hero-name">
+          <span class="hero-line" data-split="chars">Benjamin</span>
+          <span class="hero-line hero-line--serif" data-split="chars">Bladelius</span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub" data-hero-fade>Computer engineering student specialising in embedded systems. I build hardware-near software, IoT devices, and the apps and cloud services that connect them.</p>
+          <dl class="hero-meta mono" data-hero-fade>
+            <div><dt>Based in</dt><dd>Jönköping, SE · <time class="clock">--:--</time></dd></div>
+            <div><dt>Studying</dt><dd>Jönköping University · ’27</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="hero-scroll mono" data-hero-fade aria-hidden="true"><span>Scroll</span><i></i></div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>ESP32</span><span>✦</span><span>ROS 2</span><span>✦</span><span>MQTT</span><span>✦</span><span>Raspberry Pi</span><span>✦</span><span>C / C++</span><span>✦</span><span>TypeScript</span><span>✦</span><span>Kotlin</span><span>✦</span><span>Python</span><span>✦</span>
+        <span>ESP32</span><span>✦</span><span>ROS 2</span><span>✦</span><span>MQTT</span><span>✦</span><span>Raspberry Pi</span><span>✦</span><span>C / C++</span><span>✦</span><span>TypeScript</span><span>✦</span><span>Kotlin</span><span>✦</span><span>Python</span><span>✦</span>
+      </div>
+    </div>
+
+    <!-- STATEMENT -->
+    <section class="statement">
+      <p class="statement-text" data-scrub-words>I like the whole chain: from a microcontroller reading a signal, through the protocol that carries it, to the interface where someone presses a button and <em>something real happens.</em></p>
+    </section>
+
+    <!-- WORK -->
+    <section class="work" id="work">
+      <div class="section-head">
+        <span class="section-num mono">01</span>
+        <h2 class="section-title" data-split="words">Selected work</h2>
+        <p class="section-note mono" data-reveal>Four projects · 2025 — 2026</p>
+      </div>
+
+      <article class="project">
+        <div class="project-head">
+          <span class="project-index" aria-hidden="true">01</span>
+          <div>
+            <p class="project-type mono" data-reveal>Autonomous robot · Team of 7 · 2026</p>
+            <h3 class="project-title" data-split="words">New Age Robotics</h3>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-text" data-reveal>
+            <p>A robot that maps rooms, avoids obstacles and drives to any point you tap in a phone app. Built on a Husqvarna Aspire base and a Raspberry Pi 5 over three Scrum sprints, with a phone app and a cloud backend on Azure.</p>
+            <p class="project-role"><span class="mono">My part</span>I built the lidar's ROS 2 package, deployed the robot software to the Raspberry Pi, and got the Nav2 and RTAB-Map navigation stack building on the Pi. I also set up the team's shared dev container and kept the Scrum records.</p>
+            <ul class="tags mono"><li>ROS 2</li><li>Python</li><li>Raspberry Pi 5</li><li>Nav2</li><li>RTAB-Map</li><li>Docker</li></ul>
+            <div class="project-links">
+              <a class="btn" href="https://www.youtube.com/watch?v=S5txy-t1J3o" target="_blank" rel="noopener" data-magnetic>Watch the demo <span aria-hidden="true">↗</span></a>
+              <span class="badge mono">Private repository</span>
+            </div>
+          </div>
+          <div class="media media--wide">
+            <figure class="shot shot--main" data-speed="-6"><img src="assets/img/robot-3d-mapping.jpg" alt="Live 3D map of a room built by the robot, shown in Foxglove and the phone app" loading="lazy"></figure>
+            <figure class="shot" data-speed="4"><img src="assets/img/robot-path-planning.jpg" alt="Phone app showing a planned route around an obstacle" loading="lazy"></figure>
+            <figure class="shot" data-speed="10"><img src="assets/img/robot-simulator.jpg" alt="The robot driving in the Gazebo simulator" loading="lazy"></figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <span class="project-index" aria-hidden="true">02</span>
+          <div>
+            <p class="project-type mono" data-reveal>Desktop app · Solo · 2026</p>
+            <h3 class="project-title" data-split="words">Baron's Edge</h3>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-text" data-reveal>
+            <p>A Windows companion for League of Legends. During champion select it suggests champions, runes and items for your role and the draft; once the game starts, a second window shows the plan you settled on. It never reads the running game.</p>
+            <p class="project-role"><span class="mono">How it's built</span>The recommendation engine is a pure TypeScript module with no Electron or I/O dependencies, fed by its own data crawler and covered by unit tests.</p>
+            <ul class="tags mono"><li>Electron</li><li>React</li><li>TypeScript</li><li>Vitest</li></ul>
+            <div class="project-links"><span class="badge mono">Private repository</span></div>
+          </div>
+          <div class="media media--single">
+            <figure class="shot shot--main" data-speed="-4"><img src="assets/img/baronsedge-draft.webp" alt="Baron's Edge draft board with your team, enemy team, bans and suggested picks" loading="lazy"></figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <span class="project-index" aria-hidden="true">03</span>
+          <div>
+            <p class="project-type mono" data-reveal>Mobile web app · Solo · 2026</p>
+            <h3 class="project-title" data-split="words">BeanoLift</h3>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-text" data-reveal>
+            <p>A gym planner that installs on your phone like a native app and works fully offline. Plan workouts, log every set with a rest timer, and track streaks and personal records.</p>
+            <p class="project-role"><span class="mono">How it's built</span>No framework and no build step: plain JavaScript modules, a service worker for offline use, and all data kept on the device.</p>
+            <ul class="tags mono"><li>JavaScript</li><li>PWA</li><li>Service Worker</li><li>CSS</li></ul>
+            <div class="project-links"><span class="badge mono">Private repository</span></div>
+          </div>
+          <div class="media media--phones">
+            <figure class="shot shot--phone" data-speed="8"><img src="assets/img/beanolift-home.jpg" alt="BeanoLift home screen with weekly workout chart and streak" loading="lazy"></figure>
+            <figure class="shot shot--phone" data-speed="-6"><img src="assets/img/beanolift-active.jpg" alt="Active workout screen logging bench press sets" loading="lazy"></figure>
+            <figure class="shot shot--phone" data-speed="12"><img src="assets/img/beanolift-workouts.jpg" alt="Workout library with push, pull and leg days" loading="lazy"></figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <span class="project-index" aria-hidden="true">04</span>
+          <div>
+            <p class="project-type mono" data-reveal>Android game · Team of 3 · 2025</p>
+            <h3 class="project-title" data-split="words">LoL Guessr</h3>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-text" data-reveal>
+            <p>A League of Legends champion guessing game inspired by Loldle, with unlimited rounds, feedback on every guess, user accounts and a leaderboard.</p>
+            <p class="project-role"><span class="mono">My part</span>Most of the UI design and the main game screen, the Firebase database together with a teammate, and part of the win screen.</p>
+            <ul class="tags mono"><li>Kotlin</li><li>Android</li><li>Firebase</li></ul>
+            <div class="project-links"><span class="badge mono">Private repository</span></div>
+          </div>
+          <div class="media media--phones">
+            <figure class="shot shot--phone" data-speed="8"><img src="assets/img/lolguessr-menu.jpg" alt="LoL Guessr main menu" loading="lazy"></figure>
+            <figure class="shot shot--phone" data-speed="-6"><img src="assets/img/lolguessr-game.jpg" alt="Game screen with colour-coded feedback on each champion guess" loading="lazy"></figure>
+            <figure class="shot shot--phone" data-speed="12"><img src="assets/img/lolguessr-win.jpg" alt="Win screen with a play again button" loading="lazy"></figure>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="section-head">
+        <span class="section-num mono">02</span>
+        <h2 class="section-title" data-split="words">About</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text" data-reveal>
+          <p class="about-lead">I'm a computer engineering student at Jönköping University, specialising in embedded systems and graduating in 2027.</p>
+          <p>Before that I studied web development, so I'm as comfortable building an interface as I am flashing a microcontroller. I've worked as a systems engineer at Bosch and as an embedded consultant intern at Sigma Technology, where I learned to find my way in large, existing codebases and debug problems that span hardware and software.</p>
+          <p>I use AI-assisted development every day, and I care about reviewing and testing what gets built.</p>
+        </div>
+        <div class="skills">
+          <div class="skill-group" data-reveal>
+            <h3 class="mono">Languages</h3>
+            <ul><li>C</li><li>C++</li><li>C#</li><li>Java</li><li>Kotlin</li><li>TypeScript</li><li>Python</li><li>Bash</li><li>VHDL</li><li>HTML / CSS</li></ul>
+          </div>
+          <div class="skill-group" data-reveal>
+            <h3 class="mono">Embedded &amp; IoT</h3>
+            <ul><li>ESP32</li><li>Raspberry Pi</li><li>MQTT</li><li>ROS 2</li><li>Practical electronics</li></ul>
+          </div>
+          <div class="skill-group" data-reveal>
+            <h3 class="mono">Apps &amp; tools</h3>
+            <ul><li>React</li><li>Electron</li><li>Android</li><li>Firebase</li><li>Git</li><li>GitHub Actions</li><li>Docker</li><li>Scrum</li></ul>
+          </div>
+          <div class="skill-group" data-reveal>
+            <h3 class="mono">Languages spoken</h3>
+            <ul><li>Swedish (native)</li><li>English (fluent)</li><li>German (basic)</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="experience" id="experience">
+      <div class="section-head">
+        <span class="section-num mono">03</span>
+        <h2 class="section-title" data-split="words">Experience</h2>
+      </div>
+      <ol class="timeline">
+        <li class="timeline-line" aria-hidden="true"></li>
+        <li class="job" data-reveal>
+          <p class="job-date mono">Mar — May 2026</p>
+          <div>
+            <h3>Sigma Technology Embedded Solutions</h3>
+            <p class="job-role mono">Embedded systems consultant · Internship · Jönköping</p>
+            <p>Cloud backend and MQTT communication for ESP32 devices in a smart home system that captures and replays infrared remote signals for AC units and heat pumps. Wrote a patch that made raw IR decoding work across far more AC models, restructured the simulator's GUI, and built a web app that demonstrates the full command chain.</p>
+          </div>
+        </li>
+        <li class="job" data-reveal>
+          <p class="job-date mono">Jun — Aug 2025</p>
+          <div>
+            <h3>Bosch</h3>
+            <p class="job-role mono">Systems engineer · Summer · Tranås</p>
+            <p>Built a Raspberry Pi logging solution in Bash, contributed to a C# tool for updating control boards, and worked on driver updates for heat pumps. Started a Pkl project for configuration management and automation.</p>
+          </div>
+        </li>
+        <li class="job" data-reveal>
+          <p class="job-date mono">2024 — 2027</p>
+          <div>
+            <h3>Jönköping University</h3>
+            <p class="job-role mono">BSc Computer Engineering · Embedded systems</p>
+          </div>
+        </li>
+        <li class="job" data-reveal>
+          <p class="job-date mono">2022 — 2023</p>
+          <div>
+            <h3>TUC Yrkeshögskola</h3>
+            <p class="job-role mono">Web development · HTML, CSS and agile methods</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <p class="mono contact-kicker" data-reveal>04 — Contact</p>
+      <h2 class="contact-title"><span data-split="words">Let's build</span> <em data-split="words">something.</em></h2>
+      <div class="contact-row" data-reveal>
+        <a class="contact-email" href="mailto:benjaminbladelius@gmail.com" data-magnetic>benjaminbladelius@gmail.com</a>
+        <button class="btn btn--ghost copy" type="button" data-copy="benjaminbladelius@gmail.com" data-magnetic>Copy email</button>
+      </div>
+      <ul class="socials" data-reveal>
+        <li><a href="https://www.linkedin.com/in/benjaminbladelius/" target="_blank" rel="noopener" data-magnetic>LinkedIn <span aria-hidden="true">↗</span></a></li>
+        <li><a href="https://github.com/Beanos1337" target="_blank" rel="noopener" data-magnetic>GitHub <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer mono">
+    <p>© 2026 Benjamin Bladelius</p>
+    <p class="footer-legal">Baron's Edge and LoL Guessr are not endorsed by Riot Games. League of Legends is a trademark of Riot Games, Inc.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
