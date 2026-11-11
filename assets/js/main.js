@@ -160,8 +160,7 @@ function imageViewer() {
   let open = null;
 
   const rectOf = (el) => { const r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height }; };
-  function target(img) { // as big as fits: 90% wide, 86% tall, natural aspect
-    const ratio = img.naturalWidth / img.naturalHeight || 1;
+  function target(ratio) { // as big as fits: 90% wide, 86% tall, natural aspect
     let width = Math.min(innerWidth * 0.9, 1400), height = width / ratio;
     if (height > innerHeight * 0.86) { height = innerHeight * 0.86; width = height * ratio; }
     return { left: (innerWidth - width) / 2, top: (innerHeight - height) / 2, width, height };
@@ -172,29 +171,38 @@ function imageViewer() {
     done?.();
   }
 
+  // fig is a .shot figure, or a [data-video] button the video grows out of
   function show(fig) {
     if (open) return;
-    const img = fig.querySelector('img');
-    const clone = img.cloneNode();
+    let clone, ratio;
+    if (fig.dataset.video) {
+      clone = Object.assign(document.createElement('video'), { src: fig.dataset.video, controls: true, autoplay: true, playsInline: true });
+      ratio = 16 / 9;
+    } else {
+      const img = fig.querySelector('img');
+      clone = img.cloneNode();
+      clone.removeAttribute('loading');
+      clone.addEventListener('click', hide); // a video's clicks belong to its controls
+      ratio = img.naturalWidth / img.naturalHeight || 1;
+    }
     clone.className = 'viewer-img';
-    clone.removeAttribute('loading');
     const from = rectOf(fig), radius = getComputedStyle(fig).borderRadius;
     Object.assign(clone.style, { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px', borderRadius: radius });
     document.body.append(clone);
-    clone.addEventListener('click', hide);
     fig.style.visibility = 'hidden'; // the socket stays empty while the image is out
-    open = { fig, img, clone, radius, back: document.activeElement };
+    open = { fig, ratio, clone, radius, back: document.activeElement };
     lenis?.stop();
     root.classList.add('viewer-open');
     overlay.classList.add('is-open');
     closeBtn.focus({ preventScroll: true });
-    animate(clone, { ...target(img), borderRadius: '12px' }, 'expo.out');
+    animate(clone, { ...target(ratio), borderRadius: '12px' }, 'expo.out');
   }
 
   function hide() {
     if (!open) return;
     const { fig, clone, radius, back } = open;
     open = null;
+    clone.pause?.();
     overlay.classList.remove('is-open');
     animate(clone, { ...rectOf(fig), borderRadius: radius }, 'expo.inOut', () => {
       fig.style.visibility = '';
@@ -212,13 +220,14 @@ function imageViewer() {
     fig.addEventListener('click', () => show(fig));
     fig.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(fig); } });
   });
+  document.querySelectorAll('[data-video]').forEach((btn) => btn.addEventListener('click', () => show(btn)));
   overlay.addEventListener('click', hide);
   document.addEventListener('keydown', (e) => {
     if (!open) return;
     if (e.key === 'Escape') hide();
     if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); } // the close button is the only stop inside the dialog
   });
-  addEventListener('resize', () => { if (open) Object.assign(open.clone.style, Object.fromEntries(Object.entries(target(open.img)).map(([k, v]) => [k, v + 'px']))); });
+  addEventListener('resize', () => { if (open) Object.assign(open.clone.style, Object.fromEntries(Object.entries(target(open.ratio)).map(([k, v]) => [k, v + 'px']))); });
 }
 
 /** Skills board: route a PCB-style trace from every skill chip to each project it links to, and light them up on hover/tap. */
