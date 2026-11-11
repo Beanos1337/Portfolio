@@ -195,28 +195,54 @@
       <div class="about-grid">
         <div class="about-text" data-reveal>
           <p class="about-lead">I'm a computer engineering student at Jönköping University, specialising in embedded systems and graduating in 2027.</p>
-          <p>Before that I studied web development, so I'm as comfortable building an interface as I am flashing a microcontroller. I've worked as a systems engineer at Bosch and as an embedded consultant intern at Sigma Technology, where I learned to find my way in large, existing codebases and debug problems that span hardware and software.</p>
+          <p>Before that I studied web development, so I'm as comfortable building an interface as I am flashing a microcontroller. I've worked as a systems engineer at Bosch and as an embedded consultant intern at Sigma Technology, where I learned to find my way in large, existing codebases and debug problems that span hardware and software. I'm used to working in agile teams, with sprint planning, regular stand-ups, code reviews and close collaboration across disciplines to deliver working results together.</p>
           <p>I use AI-assisted development every day, and I care about reviewing and testing what gets built.</p>
         </div>
-        <div class="skills">
-          <div class="skill-group" data-reveal>
-            <h3 class="mono">Languages</h3>
-            <ul><li>C</li><li>C++</li><li>C#</li><li>Java</li><li>Kotlin</li><li>TypeScript</li><li>Python</li><li>Bash</li><li>VHDL</li><li>HTML / CSS</li></ul>
-          </div>
-          <div class="skill-group" data-reveal>
-            <h3 class="mono">Embedded &amp; IoT</h3>
-            <ul><li>ESP32</li><li>Raspberry Pi</li><li>MQTT</li><li>ROS 2</li><li>Practical electronics</li></ul>
-          </div>
-          <div class="skill-group" data-reveal>
-            <h3 class="mono">Apps &amp; tools</h3>
-            <ul><li>React</li><li>Electron</li><li>Android</li><li>Firebase</li><li>Git</li><li>GitHub Actions</li><li>Docker</li><li>Scrum</li></ul>
-          </div>
-          <div class="skill-group" data-reveal>
-            <h3 class="mono">Languages spoken</h3>
-            <ul><li>Swedish (native)</li><li>English (fluent)</li><li>German (basic)</li></ul>
-          </div>
-        </div>
       </div>
+
+      <!-- Skills as a circuit board: each skill chip is wired to the projects and jobs where it was used (data-links). -->
+      <div class="board" data-reveal>
+        <h3 class="board-label mono">Skills, wired to where I used them</h3>
+        <div class="board-grid">
+          <svg class="board-traces" aria-hidden="true"></svg>
+          <ul class="board-col board-col--left">
+            <li><button class="chip" type="button" data-links="sigma ju">C</button></li>
+            <li><button class="chip" type="button" data-links="sigma bosch ju">C++</button></li>
+            <li><button class="chip" type="button" data-links="sigma ju">ESP32</button></li>
+            <li><button class="chip" type="button" data-links="sigma">MQTT</button></li>
+            <li><button class="chip" type="button" data-links="sigma robotics ju">Electronics</button></li>
+            <li><button class="chip" type="button" data-links="sigma bosch robotics ju">Scrum</button></li>
+            <li><button class="chip" type="button" data-links="bosch">C#</button></li>
+            <li><button class="chip" type="button" data-links="bosch robotics ju">Bash</button></li>
+            <li><button class="chip" type="button" data-links="bosch robotics ju">Raspberry Pi</button></li>
+            <li><button class="chip" type="button" data-links="sigma robotics ju">Python</button></li>
+            <li><button class="chip" type="button" data-links="ju">Java</button></li>
+            <li><button class="chip" type="button" data-links="ju">VHDL</button></li>
+          </ul>
+          <ul class="board-col board-nodes">
+            <li><button class="ic" type="button" data-node="sigma"><span class="ic-ref mono">U1</span>Sigma Technology<small class="mono">Internship · 2026</small></button></li>
+            <li><button class="ic" type="button" data-node="bosch"><span class="ic-ref mono">U2</span>Bosch<small class="mono">Summer job · 2025</small></button></li>
+            <li><button class="ic" type="button" data-node="robotics"><span class="ic-ref mono">U3</span>New Age Robotics<small class="mono">Team project · 2026</small></button></li>
+            <li><button class="ic" type="button" data-node="baronsedge"><span class="ic-ref mono">U4</span>Baron's Edge<small class="mono">Solo project · 2026</small></button></li>
+            <li><button class="ic" type="button" data-node="beanolift"><span class="ic-ref mono">U5</span>BeanoLift<small class="mono">Solo project · 2026</small></button></li>
+            <li><button class="ic" type="button" data-node="lolguessr"><span class="ic-ref mono">U6</span>LoL Guessr<small class="mono">Team project · 2025</small></button></li>
+            <li><button class="ic" type="button" data-node="ju"><span class="ic-ref mono">U7</span>Jönköping University<small class="mono">Coursework</small></button></li>
+          </ul>
+          <ul class="board-col board-col--right">
+            <li><button class="chip" type="button" data-links="robotics">ROS 2</button></li>
+            <li><button class="chip" type="button" data-links="robotics">Foxglove</button></li>
+            <li><button class="chip" type="button" data-links="robotics">Docker</button></li>
+            <li><button class="chip" type="button" data-links="baronsedge">TypeScript</button></li>
+            <li><button class="chip" type="button" data-links="baronsedge">React</button></li>
+            <li><button class="chip" type="button" data-links="baronsedge">Electron</button></li>
+            <li><button class="chip" type="button" data-links="beanolift">JavaScript</button></li>
+            <li><button class="chip" type="button" data-links="beanolift">HTML / CSS</button></li>
+            <li><button class="chip" type="button" data-links="lolguessr">Kotlin</button></li>
+            <li><button class="chip" type="button" data-links="lolguessr">Android</button></li>
+            <li><button class="chip" type="button" data-links="lolguessr">Firebase</button></li>
+          </ul>
+        </div>
+        <p class="board-readout mono" aria-live="polite">Hover or tap a chip to trace it</p>      </div>
     </section>
 
     <!-- EXPERIENCE -->

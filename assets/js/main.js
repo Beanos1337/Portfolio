@@ -27,6 +27,7 @@ if (!motion) {
   root.classList.add('motion');
   run();
 }
+circuitBoard();
 
 // ---------- animations ----------
 function run() {
@@ -218,6 +219,128 @@ function imageViewer() {
     if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); } // the close button is the only stop inside the dialog
   });
   addEventListener('resize', () => { if (open) Object.assign(open.clone.style, Object.fromEntries(Object.entries(target(open.img)).map(([k, v]) => [k, v + 'px']))); });
+}
+
+/** Skills board: route a PCB-style trace from every skill chip to each project it links to, and light them up on hover/tap. */
+function circuitBoard() {
+  const board = document.querySelector('.board');
+  if (!board) return;
+  const grid = board.querySelector('.board-grid'), svg = board.querySelector('.board-traces'), readout = board.querySelector('.board-readout');
+  const idle = readout.textContent;
+  const nodes = new Map([...board.querySelectorAll('[data-node]')].map((n) => [n.dataset.node, n]));
+  const chips = [...board.querySelectorAll('[data-links]')];
+  const NS = 'http://www.w3.org/2000/svg';
+  const name = (el) => el.firstChild.nodeType === 3 ? el.textContent.trim() : [...el.childNodes].find((n) => n.nodeType === 3).textContent.trim();
+  let traces = [], pinned = null;
+
+  // orthogonal route with 45° corners: out of the chip, along its own lane, into the node
+  function route(x0, y0, lane, x1, y1, dir) {
+    const dy = y1 - y0, s = Math.sign(dy), c = Math.min(7, Math.abs(dy) / 2);
+    if (Math.abs(dy) < 1) return `M${x0} ${y0}H${x1}`;
+    return `M${x0} ${y0}H${lane - c * dir}L${lane} ${y0 + s * c}V${y1 - s * c}L${lane + c * dir} ${y1}H${x1}`;
+  }
+
+  function layout() {
+    svg.replaceChildren();
+    traces = [];
+    if (getComputedStyle(svg).display === 'none') return; // phone layout: chips only
+    const g = grid.getBoundingClientRect(), rel = (r) => ({ l: r.left - g.left, r: r.right - g.left, t: r.top - g.top, h: r.height });
+    for (const side of ['left', 'right']) {
+      const dir = side === 'left' ? 1 : -1;
+      const list = [];
+      for (const chip of chips) {
+        if (!chip.closest(`.board-col--${side}`)) continue;
+        const c = rel(chip.getBoundingClientRect());
+        for (const id of chip.dataset.links.split(' ')) list.push({ chip, node: nodes.get(id), x0: dir > 0 ? c.r : c.l, y0: c.t + c.h / 2 });
+      }
+      // traces into the same node enter at their own pin, spread down its edge in source order
+      for (const node of nodes.values()) {
+        const mine = list.filter((t) => t.node === node).sort((a, b) => a.y0 - b.y0);
+        const n = rel(node.getBoundingClientRect());
+        mine.forEach((t, i) => { t.x1 = dir > 0 ? n.l - 5 : n.r + 5; t.y1 = n.t + (n.h * (i + 1)) / (mine.length + 1); });
+      }
+      // lanes: traces heading down use lanes nearer the chips the lower they start (and the mirror for up), which keeps crossings rare
+      const down = list.filter((t) => t.y1 >= t.y0).sort((a, b) => b.y0 - a.y0);
+      const up = list.filter((t) => t.y1 < t.y0).sort((a, b) => a.y0 - b.y0);
+      const ordered = [...down, ...up];
+      const from = list[0]?.x0 ?? 0, to = list[0]?.x1 ?? 0, gap = Math.abs(to - from);
+      ordered.forEach((t, i) => {
+        const lane = from + dir * gap * (0.14 + (0.72 * (i + 0.5)) / ordered.length);
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('class', 'trace');
+        path.setAttribute('d', route(t.x0, t.y0, lane, t.x1, t.y1, dir));
+        svg.append(path);
+        const pads = [[t.x0 + dir * 3, t.y0], [t.x1, t.y1]].map(([cx, cy]) => {
+          const pad = document.createElementNS(NS, 'circle');
+          pad.setAttribute('class', 'pad'); pad.setAttribute('cx', cx); pad.setAttribute('cy', cy); pad.setAttribute('r', 2.5);
+          svg.append(pad);
+          return pad;
+        });
+        traces.push({ chip: t.chip, node: t.node, path, pads, len: path.getTotalLength() });
+      });
+    }
+  }
+
+  // traces etch in the first time the board scrolls into view (hidden until then)
+  if (root.classList.contains('motion') && window.ScrollTrigger) {
+    svg.classList.add('pre-etch');
+    window.ScrollTrigger.create({
+      trigger: grid, start: 'top 75%', once: true,
+      onEnter: () => {
+        traces.forEach((t) => { t.path.style.strokeDasharray = t.len; t.path.style.strokeDashoffset = t.len; });
+        svg.classList.remove('pre-etch');
+        window.gsap.to(traces.map((t) => t.path), {
+          strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', stagger: 0.03,
+          onComplete: () => traces.forEach((t) => { t.path.style.strokeDasharray = ''; t.path.style.strokeDashoffset = ''; })
+        });
+      }
+    });
+  }
+
+  function pulse(t) { // a spark running along a lit trace, chip to node
+    if (reduce) return;
+    const p = t.path.cloneNode();
+    p.setAttribute('class', 'pulse');
+    p.style.strokeDasharray = `14 ${t.len}`;
+    svg.append(p);
+    p.animate([{ strokeDashoffset: 14 }, { strokeDashoffset: -t.len }], { duration: 500 + t.len * 1.6, easing: 'ease-in-out', iterations: Infinity });
+  }
+
+  function light(el) {
+    clear();
+    const isNode = el.hasAttribute('data-node');
+    const hit = traces.filter((t) => (isNode ? t.node : t.chip) === el);
+    const ids = isNode ? [] : el.dataset.links.split(' ');
+    const linked = isNode ? chips.filter((c) => c.dataset.links.split(' ').includes(el.dataset.node)) : ids.map((id) => nodes.get(id));
+    board.classList.add('is-tracing');
+    [el, ...linked].forEach((x) => x.classList.add('is-lit'));
+    hit.forEach((t) => { t.path.classList.add('is-lit'); t.pads.forEach((p) => p.classList.add('is-lit')); pulse(t); });
+    readout.innerHTML = isNode
+      ? `<b>${name(el)}</b> ← ${linked.map(name).join(', ')}`
+      : `<b>${name(el)}</b> → ${linked.map(name).join(', ')}`;
+  }
+  function clear() {
+    board.classList.remove('is-tracing');
+    board.querySelectorAll('.is-lit').forEach((x) => x.classList.remove('is-lit'));
+    svg.querySelectorAll('.pulse').forEach((p) => p.remove());
+    readout.textContent = idle;
+  }
+
+  for (const el of [...chips, ...nodes.values()]) {
+    el.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && !pinned) light(el); });
+    el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !pinned) clear(); });
+    el.addEventListener('focus', () => { if (!pinned) light(el); });
+    el.addEventListener('blur', () => { if (!pinned) clear(); });
+    el.addEventListener('click', () => { // tap (or click) pins the highlight; tap again to let go
+      if (pinned === el) { pinned = null; clear(); return; }
+      pinned = el;
+      light(el);
+    });
+  }
+  document.addEventListener('click', (e) => { if (pinned && !board.contains(e.target)) { pinned = null; clear(); } });
+
+  new ResizeObserver(() => { const keep = pinned; layout(); if (keep) light(keep); }).observe(grid);
+  document.fonts?.ready.then(layout);
 }
 
 /** Wrap each char/word of `el` in a clipping mask. Returns the inner spans to animate. */
