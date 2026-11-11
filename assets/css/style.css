@@ -71,12 +71,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @keyframes grain { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-5%, 3%); } 40% { transform: translate(3%, -6%); } 60% { transform: translate(-7%, -2%); } 80% { transform: translate(6%, 5%); } }
 
 .cursor { display: none; }
-.has-cursor .cursor { display: block; position: fixed; inset: 0; z-index: 200; pointer-events: none; mix-blend-mode: difference; }
+.has-cursor .cursor { display: block; position: fixed; inset: 0; z-index: 200; pointer-events: none; mix-blend-mode: difference; overflow: hidden; }
 .has-cursor, .has-cursor a, .has-cursor button, .has-cursor .shot, .has-cursor .viewer, .has-cursor .viewer-img { cursor: none; }
-.cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); }
-.cursor-dot { width: 6px; height: 6px; }
-.cursor-ring { width: 36px; height: 36px; background: transparent; border: 1px solid #fff; transition: width .4s var(--ease), height .4s var(--ease), background-color .4s var(--ease); }
-.cursor.is-hover .cursor-ring { width: 72px; height: 72px; background: #fff; }
+/* crosshair with a live x/y readout; over links and buttons, corner brackets lock onto the element */
+.cursor > * { position: fixed; left: 0; top: 0; transition: opacity .3s var(--ease); }
+.cursor-h { width: 100%; border-top: 1px dashed rgba(255, 255, 255, .16); }
+.cursor-v { height: 100%; border-left: 1px dashed rgba(255, 255, 255, .16); }
+.cursor-dot { width: 7px; height: 7px; margin: -3.5px; border: 1px solid #fff; transition: transform .3s var(--ease); }
+.cursor-read { font-size: 10px; letter-spacing: .06em; color: rgba(255, 255, 255, .6); white-space: nowrap; }
+.cursor-box { opacity: 0; }
+.cursor-box i { position: absolute; width: 9px; height: 9px; border: 0 solid #fff; }
+.cursor-box i:nth-child(1) { left: 0; top: 0; border-width: 1px 0 0 1px; }
+.cursor-box i:nth-child(2) { right: 0; top: 0; border-width: 1px 1px 0 0; }
+.cursor-box i:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 1px 1px; }
+.cursor-box i:nth-child(4) { right: 0; bottom: 0; border-width: 0 1px 1px 0; }
+.cursor.is-hover .cursor-box { opacity: 1; }
+.cursor.is-hover .cursor-h, .cursor.is-hover .cursor-v, .cursor.is-hover .cursor-read { opacity: 0; }
+.cursor.is-hover .cursor-dot { transform: rotate(45deg) scale(.6); }
 
 /* ---------- nav ---------- */
 .nav {

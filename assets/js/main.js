@@ -134,13 +134,25 @@ function run() {
   if (finePointer) {
     root.classList.add('has-cursor');
     const cursor = document.querySelector('.cursor');
-    const dot = cursor.querySelector('.cursor-dot'), ring = cursor.querySelector('.cursor-ring');
-    const dx = gsap.quickTo(dot, 'x', { duration: 0.1 }), dy = gsap.quickTo(dot, 'y', { duration: 0.1 });
-    const rx = gsap.quickTo(ring, 'x', { duration: 0.5, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: 0.5, ease: 'power3' });
-    gsap.set([dot, ring], { x: -100, y: -100 });
-    addEventListener('pointermove', (e) => { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
-    document.addEventListener('pointerover', (e) => cursor.classList.toggle('is-hover', !!e.target.closest('a, button, .shot, .viewer-img')));
-    document.addEventListener('pointerleave', () => gsap.set([dot, ring], { x: -100, y: -100 }));
+    const [h, v, dot, read, box] = ['h', 'v', 'dot', 'read', 'box'].map((n) => cursor.querySelector('.cursor-' + n));
+    const [bx, by, bw, bh] = ['x', 'y', 'width', 'height'].map((p) => gsap.quickTo(box, p, { duration: 0.35, ease: 'power3' }));
+    const pad4 = (n) => String(Math.max(0, Math.round(n))).padStart(4, '0');
+    let mx = -100, my = -100, target = null;
+    addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; });
+    document.addEventListener('pointerover', (e) => { target = e.target.closest('a, button, .shot, .viewer-img'); cursor.classList.toggle('is-hover', !!target); });
+    document.addEventListener('pointerleave', () => { mx = my = -100; target = null; cursor.classList.remove('is-hover'); });
+    gsap.ticker.add(() => {
+      h.style.translate = `0 ${my}px`;
+      v.style.translate = `${mx}px 0`;
+      dot.style.translate = `${mx}px ${my}px`;
+      const flip = mx > innerWidth - 130; // keep the readout on screen at the right edge
+      read.style.translate = `${mx + (flip ? -118 : 12)}px ${my + 10}px`;
+      read.textContent = `x ${pad4(mx)}  y ${pad4(my)}`;
+      // brackets rest on the cursor (hidden) and lock onto the hovered element, following it if it moves
+      const r = target?.isConnected ? target.getBoundingClientRect() : null, p = r ? 8 : 0;
+      const b = r || { left: mx - 12, top: my - 12, width: 24, height: 24 };
+      bx(b.left - p); by(b.top - p); bw(b.width + 2 * p); bh(b.height + 2 * p);
+    });
   }
 
   // Images change layout height as they load; keep trigger positions right.
